@@ -74,7 +74,7 @@ void AFlyingPigFlipbookActor::Move(FVector direction, float DeltaTime)
 	paperFlipbookComponent->AddForce(
 		direction * 10.0f
 	);
-	UE_LOG(LogTemp, Warning, TEXT("%f"), direction.Z* 10.0f);
+	//UE_LOG(LogTemp, Warning, TEXT("%f"), direction.Z* 10.0f);
 }
 
 void AFlyingPigFlipbookActor::setHitEdge(bool edge)

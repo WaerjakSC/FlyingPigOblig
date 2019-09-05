@@ -65,7 +65,7 @@ void UBrain_Component::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	double maxQ = FMath::Max(qs);
 	int maxQIndex = qs.Find(maxQ);
 	exploreRate = FMath::Clamp(exploreRate - exploreDecay, minExploreRate, maxExploreRate);
-	UE_LOG(LogTemp, Warning, TEXT("maxQIndex = %i"), maxQIndex);
+	//UE_LOG(LogTemp, Warning, TEXT("maxQIndex = %i"), maxQIndex);
 	if (maxQIndex == 0)
 	{
 		piggy->Move(
