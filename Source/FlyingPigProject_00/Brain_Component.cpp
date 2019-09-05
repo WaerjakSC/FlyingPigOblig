@@ -58,27 +58,30 @@ void UBrain_Component::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	TArray<double> qs;
 
 	states.Add(piggy->getPigPosition().Z);
-	states.Add(piggy->getPigPhysicsVelocity().Z); 
+	states.Add(piggy->getPigPhysicsVelocity().Z);
+	//UE_LOG(LogTemp, Warning, TEXT("%f"), piggy->getPigPhysicsVelocity().Z);
 
 	qs = SoftMax(ann->CalcOutput(states));
 	double maxQ = FMath::Max(qs);
 	int maxQIndex = qs.Find(maxQ);
 	exploreRate = FMath::Clamp(exploreRate - exploreDecay, minExploreRate, maxExploreRate);
-
+	UE_LOG(LogTemp, Warning, TEXT("maxQIndex = %i"), maxQIndex);
 	if (maxQIndex == 0)
 	{
-		piggy->getFlipbookComponent()->AddForce(
+		piggy->Move(
 			FVector(
 				0.0f, 0.0f, 1.0f * flySpeed * (float)qs[maxQIndex]
-			)
+			), 
+			DeltaTime
 		);
 	}
 	else if (maxQIndex == 1)
 	{
-		piggy->getFlipbookComponent()->AddForce(
+		piggy->Move(
 			FVector(
 				0.0f, 0.0f, -1.0f * flySpeed * (float)qs[maxQIndex]
-			)
+			),
+			DeltaTime
 		);
 	}
 	if (piggy->getHitEdge() == true)
@@ -125,7 +128,7 @@ void UBrain_Component::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 			ann->Train(replayMemory[i]->states, t_outputsOld);
 		}
 
-		//Here, we need to keep the best time and reset the ball
+		//Here, we need to keep the best time and reset the pig
 		if (timer > maxBalanceTime)
 		{
 			maxBalanceTime = timer;

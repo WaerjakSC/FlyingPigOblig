@@ -60,7 +60,7 @@ public:
 	// CorrectionForce?
 
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"), Category = "Q-Learning_NNet")
-		float flySpeed = 1.5f;
+		float flySpeed = 10000.5f;
 
 		
 };
